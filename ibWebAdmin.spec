@@ -1,10 +1,10 @@
 Summary:        ibWebAdmin is intended to handle the adminstration of Firebird over the web
 Name:           ibWebAdmin
 Version:        1.0.2
-Release:        %mkrel 1
+Release:        %mkrel 2
 License:        GPL
 Group:          System/Servers
-URL:            http://www.phpmyadmin.net/
+URL:            http://www.ibwebadmin.net/
 Source0:        http://ufpr.dl.sourceforge.net/sourceforge/ibwebadmin/ibWebAdmin_%{version}.tar.gz
 Source1:	configuration.inc.php
 Requires(pre):  apache-mod_php php-mysql php-mbstring php-mcrypt
@@ -126,5 +126,3 @@ rm -rf %{buildroot}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 /var/www/%{name}
 %{_datadir}/applications/*.desktop
-
-
