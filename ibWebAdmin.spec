@@ -1,7 +1,7 @@
 Summary:        ibWebAdmin is intended to handle the adminstration of Firebird over the web
 Name:           ibWebAdmin
 Version:        1.0.2
-Release:        %mkrel 2
+Release:        %mkrel 3
 License:        GPL
 Group:          System/Servers
 URL:            http://www.ibwebadmin.net/
