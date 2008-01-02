@@ -19,6 +19,7 @@ BuildRequires:  apache-base >= 2.0.54
 Requires(post): ccp >= 0.4.0
 Requires:       firebird-server
 Requires:       php-firebird
+BuildRoot:      %{_tmppath}/%{name}-buildroot
 
 %description
 phpMyAdmin is intended to handle the adminstration of MySQL over
