@@ -22,7 +22,7 @@ Requires:       php-firebird
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 
 %description
-phpMyAdmin is intended to handle the adminstration of MySQL over
+phpMyAdmin is intended to handle the adminstration of Firebird over
 the web. Currently it can : create and drop databases, create,
 copy, drop and alter tables, delete, edit and add fields, execute
 any SQL-statement, even batch-queries, manage keys on fields, load
