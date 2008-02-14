@@ -1,4 +1,4 @@
-Summary:        ibWebAdmin is intended to handle the adminstration of Firebird over the web
+Summary:        Adminstration of Firebird over the web
 Name:           ibWebAdmin
 Version:        1.0.2
 Release:        %mkrel 3
