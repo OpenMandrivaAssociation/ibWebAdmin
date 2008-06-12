@@ -107,13 +107,17 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt VERSION \
 	--newfile %{_sysconfdir}/%{name}/configuration.inc.php.rpmnew
 
 %_post_webapp
+%if %mdkversion < 200900
 %update_menus
 %update_desktop_database
+%endif
 
 %postun
 %_postun_webapp
+%if %mdkversion < 200900
 %clean_menus
 %clean_desktop_database
+%endif
 
 %clean
 rm -rf %{buildroot}
