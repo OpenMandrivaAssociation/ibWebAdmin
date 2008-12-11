@@ -14,7 +14,7 @@ Requires(postun): desktop-file-utils
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
 BuildArch:      noarch
-BuildRequires:  ImageMagick
+BuildRequires:  imagemagick
 BuildRequires:  apache-base >= 2.0.54
 Requires(post): ccp >= 0.4.0
 Requires:       firebird-server
