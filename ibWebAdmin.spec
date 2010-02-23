@@ -7,19 +7,24 @@ Group:          System/Servers
 URL:            http://www.ibwebadmin.net/
 Source0:        http://ufpr.dl.sourceforge.net/sourceforge/ibwebadmin/ibWebAdmin_%{version}.tar.gz
 Source1:	configuration.inc.php
-Requires(pre):  apache-mod_php php-mysql php-mbstring php-mcrypt
-Requires:       apache-mod_php php-mysql php-mbstring php-mcrypt
+Requires:       apache-mod_php
+Requires:       php-mysql
+Requires:       php-mbstring
+Requires:       php-mcrypt
+Requires(post): ccp >= 0.4.0
+%if %mdkversion < 201010
+Requires(post):   rpm-helper
+Requires(postun):   rpm-helper
+%endif
+%if %mdkversion < 200900
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
-Requires(post): rpm-helper
-Requires(postun): rpm-helper
-BuildArch:      noarch
-BuildRequires:  imagemagick
-BuildRequires:  apache-base >= 2.0.54
-Requires(post): ccp >= 0.4.0
+%endif
 Requires:       firebird-server
 Requires:       php-firebird
-BuildRoot:      %{_tmppath}/%{name}-buildroot
+BuildRequires:  imagemagick
+BuildArch:      noarch
+BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
 phpMyAdmin is intended to handle the adminstration of Firebird over
@@ -57,35 +62,19 @@ ln -s %{_sysconfdir}/%{name}/configuration.inc.php %{buildroot}/var/www/%{name}/
 cat > %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf << EOF
 Alias /%{name} /var/www/%{name}
 
-<IfModule mod_php4.c>
-    php_flag session.auto_start 0
-</IfModule>
-
-<IfModule mod_php5.c>
-    php_flag session.auto_start 0
-</IfModule>
+php_flag session.auto_start 0
 
 <Directory /var/www/%{name}>
-    Allow from All
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1
+    ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/01_%{name}.conf"
 </Directory>
 
 <Directory /var/www/%{name}/inc>
-    Order Deny,Allow
-    Deny from All
-    Allow from None
+    Order deny,allow
+    Deny from all
 </Directory>
-
-# Uncomment the following lines to force a redirect to a working 
-# SSL aware apache server. This serves as an example.
-# 
-#<IfModule mod_ssl.c>
-#    <LocationMatch /%{name}>
-#        Options FollowSymLinks
-#        RewriteEngine on
-#        RewriteCond %{SERVER_PORT} !^443$
-#        RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
-#    </LocationMatch>
-#</IfModule>
 EOF
 
 # XDG menu
@@ -106,14 +95,18 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt VERSION \
 	--oldfile %{_sysconfdir}/%{name}/configuration.inc.php \
 	--newfile %{_sysconfdir}/%{name}/configuration.inc.php.rpmnew
 
+%if %mdkversion < 201010
 %_post_webapp
+%endif
 %if %mdkversion < 200900
 %update_menus
 %update_desktop_database
 %endif
 
 %postun
+%if %mdkversion < 201010
 %_postun_webapp
+%endif
 %if %mdkversion < 200900
 %clean_menus
 %clean_desktop_database
@@ -127,6 +120,6 @@ rm -rf %{buildroot}
 %doc LICENSE NEWS README
 %dir %{_sysconfdir}/%{name}
 %attr(0640,apache,root) %config(noreplace) %{_sysconfdir}/%{name}/configuration.inc.php
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
 /var/www/%{name}
 %{_datadir}/applications/*.desktop
