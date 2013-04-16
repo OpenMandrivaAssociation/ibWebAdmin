@@ -1,7 +1,7 @@
 Summary:        Adminstration of Firebird over the web
 Name:           ibWebAdmin
 Version:        1.0.2
-Release:        %mkrel 8
+Release:        9
 License:        GPL
 Group:          System/Servers
 URL:            http://www.ibwebadmin.net/
@@ -103,14 +103,6 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt VERSION \
 %update_desktop_database
 %endif
 
-%postun
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
-%if %mdkversion < 200900
-%clean_menus
-%clean_desktop_database
-%endif
 
 %clean
 rm -rf %{buildroot}
