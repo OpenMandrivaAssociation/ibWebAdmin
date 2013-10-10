@@ -10,6 +10,7 @@ Source1:	configuration.inc.php
 Requires:       apache-mod_php
 Requires:       php-mysql
 Requires:       php-mbstring
+Requires:		apache-mod_socache_shmcb
 Requires:       php-mcrypt
 Requires(post): ccp >= 0.4.0
 %if %mdkversion < 201010
@@ -65,15 +66,12 @@ Alias /%{name} /var/www/%{name}
 php_flag session.auto_start 0
 
 <Directory /var/www/%{name}>
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1
+    Require host 127.0.0.1
     ErrorDocument 403 "Access denied per %{_sysconfdir}/httpd/conf/webapps.d/01_%{name}.conf"
 </Directory>
 
 <Directory /var/www/%{name}/inc>
-    Order deny,allow
-    Deny from all
+    Require all denied
 </Directory>
 EOF
 
