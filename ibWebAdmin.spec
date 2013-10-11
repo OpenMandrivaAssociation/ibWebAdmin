@@ -1,7 +1,7 @@
 Summary:        Adminstration of Firebird over the web
 Name:           ibWebAdmin
 Version:        1.0.2
-Release:        10
+Release:        11
 License:        GPL
 Group:          System/Servers
 URL:            http://www.ibwebadmin.net/
@@ -10,22 +10,13 @@ Source1:	configuration.inc.php
 Requires:       apache-mod_php
 Requires:       php-mysql
 Requires:       php-mbstring
-Requires:		apache-mod_socache_shmcb
+Requires:	apache-mod_socache_shmcb
 Requires:       php-mcrypt
 Requires(post): ccp >= 0.4.0
-%if %mdkversion < 201010
-Requires(post):   rpm-helper
-Requires(postun):   rpm-helper
-%endif
-%if %mdkversion < 200900
-Requires(post): desktop-file-utils
-Requires(postun): desktop-file-utils
-%endif
 Requires:       firebird-server
 Requires:       php-firebird
 BuildRequires:  imagemagick
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}
 
 %description
 phpMyAdmin is intended to handle the adminstration of Firebird over
@@ -43,8 +34,6 @@ cp -f %{SOURCE1} %{_builddir}/%{name}_%{version}/inc/configuration.inc.php
 %build
 
 %install
-rm -rf %{buildroot}
-
 install -d %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
 install -d %{buildroot}%{_sysconfdir}/%{name}
 install -d %{buildroot}/var/www/%{name}
@@ -93,17 +82,7 @@ ccp --delete --ifexists --set "NoOrphans" --ignoreopt VERSION \
 	--oldfile %{_sysconfdir}/%{name}/configuration.inc.php \
 	--newfile %{_sysconfdir}/%{name}/configuration.inc.php.rpmnew
 
-%if %mdkversion < 201010
-%_post_webapp
-%endif
-%if %mdkversion < 200900
-%update_menus
-%update_desktop_database
-%endif
-
-
 %clean
-rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,0755)
