@@ -4,7 +4,7 @@ Version:        1.0.2
 Release:        12
 License:        GPL
 Group:          System/Servers
-URL:            http://www.ibwebadmin.net/
+URL:            https://www.ibwebadmin.net/
 Source0:        http://ufpr.dl.sourceforge.net/sourceforge/ibwebadmin/ibWebAdmin_%{version}.tar.gz
 Source1:	configuration.inc.php
 Requires:       apache-mod_php
